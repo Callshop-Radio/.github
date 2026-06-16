@@ -64,7 +64,9 @@ If a repo ships multiple parallel branches (à la `next-sanity-starter`'s
 
 ### `.github/workflows/dependabot-auto-merge.yml`
 
-Thin caller for the reusable workflow in this repo:
+Thin caller for the reusable workflow in this repo. **Pin to a commit
+SHA** (not `@main`) so a compromised push to this repo cannot silently
+change what runs in your CI:
 
 ```yaml
 name: Dependabot auto-merge
@@ -79,9 +81,13 @@ permissions:
 
 jobs:
   auto-merge:
-    uses: Callshop-Radio/.github/.github/workflows/dependabot-auto-merge.yml@main
+    uses: Callshop-Radio/.github/.github/workflows/dependabot-auto-merge.yml@<SHA>
     secrets: inherit
 ```
+
+Replace `<SHA>` with the full commit hash from this repo's `main` after
+any change to the reusable workflow. Bump deliberately — treat it like a
+dependency update.
 
 ## Email notifications
 
